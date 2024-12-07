@@ -1,0 +1,32 @@
+name: chat
+description: "A new Flutter project."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_chat_ui: ^1.6.10
+  flutter_chat_types: ^3.6.2
+  uuid: ^4.2.2
+  firebase_core: ^3.8.1
+  firebase_auth: ^5.3.4
+  cloud_firestore: ^5.5.1
+  google_fonts: ^6.2.1
+  firebase_messaging: ^15.1.6
+
+  cupertino_icons: ^1.0.2
+  google_sign_in: ^6.2.2
+  shared_preferences: ^2.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
