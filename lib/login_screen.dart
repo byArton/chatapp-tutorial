@@ -1,11 +1,8 @@
-//ログイン画面を作成
-import 'package:chat/chatroom_list_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'chatroom_list_screen.dart'; // ChatRoomListScreenのインポート
 
 class LoginScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -51,15 +48,34 @@ class LoginScreen extends StatelessWidget {
             // 他の必要なフィールドを追加
           });
 
-          // chatroom_list_screenに遷移
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => ChatRoomListScreen()),
-          );
+          print('新しいユーザーが追加されました: ${user.uid}');
         } else {
           print('ユーザーは既に存在します: ${user.uid}');
         }
+
+        // フェードインアニメーションで画面遷移
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ChatRoomListScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = 0.0;
+              const end = 1.0;
+              const curve = Curves.easeIn;
+
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var fadeAnimation = animation.drive(tween);
+
+              return FadeTransition(
+                opacity: fadeAnimation,
+                child: child,
+              );
+            },
+          ),
+        );
       }
     } catch (e) {
       print('ログインエラー: $e');
